@@ -1,1 +1,71 @@
-<p>menu works!</p>
+<nav class="bg-gradient-to-r from-red-700 to-red-400 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <!-- Logo -->
+        <div class="flex-shrink-0">
+          <a routerLink="/" class="flex items-center">
+            <img src="/logo.png" alt="Logo" class="h-12 w-auto bg-gray-200 p-1 rounded bg-opacity-80">
+          </a>
+        </div>
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-8">
+          <a 
+            routerLink="/" 
+            routerLinkActive="font-bold text-red-700" 
+            [routerLinkActiveOptions]="{ exact: true }" 
+            class="hover:underline"
+          >
+            Home
+          </a>
+          <a 
+            routerLink="/about-us" 
+            routerLinkActive="font-bold text-red-700" 
+            [routerLinkActiveOptions]="{ exact: true }" 
+            class="hover:underline"
+          >
+            Over ons
+          </a>
+          <a 
+            routerLink="/cfmoto" 
+            routerLinkActive="font-bold text-red-700" 
+            [routerLinkActiveOptions]="{ exact: true }" 
+            class="hover:underline"
+          >
+            CFMoto
+          </a>
+          <a 
+            routerLink="/contact" 
+            routerLinkActive="font-bold text-red-700" 
+            [routerLinkActiveOptions]="{ exact: true }" 
+            class="hover:underline"
+          >
+            Contact
+          </a>
+        </div>
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden flex items-center">
+          <button
+            (click)="toggleMobileMenu()"
+            class="text-white hover:text-red-700 focus:outline-none focus:text-red-700"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div
+      *ngIf="isMobileMenuOpen"
+      class="md:hidden bg-gradient-to-r from-red-700 to-red-400 text-white transition-all duration-300 ease-in-out overflow-hidden items-center"
+      [ngClass]="{ 'max-h-0': !isMobileMenuOpen, 'max-h-60': isMobileMenuOpen }"
+    >
+      <a routerLink="/" routerLinkActive="font-bold text-black" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMobileMenu()" class="block px-4 py-2 hover:underline">Home</a>
+      <a routerLink="/about-us" routerLinkActive="font-bold text-black" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMobileMenu()" class="block px-4 py-2 hover:underline">Over ons</a>
+      <a routerLink="/cfmoto" routerLinkActive="font-bold text-black" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMobileMenu()" class="block px-4 py-2 hover:underline">CFMoto</a>
+      <a routerLink="/contact" routerLinkActive="font-bold text-black" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMobileMenu()" class="block px-4 py-2 hover:underline">Contact</a>
+
+    </div>
+  </nav>
+  
