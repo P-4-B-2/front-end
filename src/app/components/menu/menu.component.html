@@ -4,7 +4,7 @@
         <!-- Logo -->
         <div class="flex-shrink-0">
           <a routerLink="/" class="flex items-center">
-            <img src="/logo.png" alt="Logo" class="h-12 w-auto bg-gray-200 p-1 rounded bg-opacity-80">
+            <img src="/rurant_logo.svg" alt="Logo" class="h-12 w-auto bg-gray-200 p-1 rounded bg-opacity-80">
           </a>
         </div>
         <!-- Desktop Menu -->
@@ -18,28 +18,12 @@
             Home
           </a>
           <a 
-            routerLink="/about-us" 
+            routerLink="/login" 
             routerLinkActive="font-bold text-red-700" 
             [routerLinkActiveOptions]="{ exact: true }" 
             class="hover:underline"
           >
-            Over ons
-          </a>
-          <a 
-            routerLink="/cfmoto" 
-            routerLinkActive="font-bold text-red-700" 
-            [routerLinkActiveOptions]="{ exact: true }" 
-            class="hover:underline"
-          >
-            CFMoto
-          </a>
-          <a 
-            routerLink="/contact" 
-            routerLinkActive="font-bold text-red-700" 
-            [routerLinkActiveOptions]="{ exact: true }" 
-            class="hover:underline"
-          >
-            Contact
+            Login
           </a>
         </div>
         <!-- Mobile Menu Button -->
@@ -62,9 +46,7 @@
       [ngClass]="{ 'max-h-0': !isMobileMenuOpen, 'max-h-60': isMobileMenuOpen }"
     >
       <a routerLink="/" routerLinkActive="font-bold text-black" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMobileMenu()" class="block px-4 py-2 hover:underline">Home</a>
-      <a routerLink="/about-us" routerLinkActive="font-bold text-black" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMobileMenu()" class="block px-4 py-2 hover:underline">Over ons</a>
-      <a routerLink="/cfmoto" routerLinkActive="font-bold text-black" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMobileMenu()" class="block px-4 py-2 hover:underline">CFMoto</a>
-      <a routerLink="/contact" routerLinkActive="font-bold text-black" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMobileMenu()" class="block px-4 py-2 hover:underline">Contact</a>
+      <a routerLink="/login" routerLinkActive="font-bold text-black" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMobileMenu()" class="block px-4 py-2 hover:underline">Login   </a>
 
     </div>
   </nav>
