@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from "./components/footer/footer.component";
 import { MenuComponent } from "./components/menu/menu.component";
 import { NgClass } from '@angular/common';
-import { ScrollToTopService } from '../services/scroll-to-top-service';
+import { ScrollToTopService } from './services/scroll-to-top-service';
 
 @Component({
   selector: 'app-root',
