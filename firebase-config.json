@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "frank-de-pratende-bank",
+  "private_key_id": "c9a35656ef3c62b7cdc294e2ebdc58a41754a3d2",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCTXg1pmMJ4XMMk\nxI96HWPFtIAudCxOMFcn2Cp3dai//tPhg8nHTDDaUHxl9yER7aIpXNj9QBouR5mr\nPYx5CcbaDkulw9Vd7U4egw1BtXN1VsEuGTisD1QbV9uOMOw3ScPRNEXfQZLfxfIH\nZm6F68GfQUOEmurXtGz0iARz92KTY3K+tcBBhqAeP397lCirDp0DdTkueHhGXw00\n/5pM7bE5Z7XyO+EL4VbLjcdFYUslchitxorIQFm3OsWbDbAEXZcVWl+4i6p+bjyc\nrquEug94nilKobbff+L9FZ9bUDHya/rMP74oCmbTUe0jl5BzKA9HbQkt2j0ea7sw\n0adOXzLDAgMBAAECggEABGRtPz8lAglhwkV0MU48RwxA4HbooHv4XQuoWF8oDxuS\nnR9xyCrmhIXu70BqZT+78ZephVgqb5laudaKdUvBTYaCOAfvjW52lu+OWZha6fMS\nrEO8LgSsRmmxSuT9EA4hc/7RhlH3Wra/pqYll9WVs8rHhGWe/PGNEyIVX+TOX1ja\njQ5UU99bf2HucUVqDFgeMMTbJGEtX8ocIbqq0NJAC7A96HvGmFBUgelAovEvIv1E\n6rYvp4xES6xKgzle8FHfY7HK6l8ZvSfnFEEuFPe9AxJPTCkgjO4GHOgwAykxBWG3\npNiFD80YGc1uxu+CLGrXpvM7yKQT+Nn56jRRKmPqYQKBgQDEovYB0QWSKAK/cPOS\nrVoUyMF4p+1Tb6Q30BkLm6Ex/aZDu++ASWX51Pk2c3AvS6jKGApl7l8TJb+K4OxU\n9Ikdjg/D8ZOExS4OE4tsjHIPXGEI9ZlA3TInEaS5A7NvZgD39bI8GKjAbGZJuyz3\nX3YGnj9sTFsnNAH2+qkaSya6fQKBgQC/21PrlZdUX8UpKsyJLdNN7F324j4G1LNU\ndELANlBnChc2AU4SSbMscKulw4yIhM68gFvmPX6Q16bNwBY89YMVBSCAq56p+KR0\nPOpSm/PdJIpm9FgNEVf+oyUdeNSnebYEP+bm2Gdt7firDGBRRFDd9o+iqfIpXX0m\nZN89rGfmPwKBgQCATwXPsaC8+jawzPdjIpLBNS5pmMoXw6WYdcWh+W95u1WepSdm\nwn40Q3BKw5DUi74cAQvn719Ck0MlUBdmaBqAmo5XAW+NF00yCjbUIeDbfSAkRH44\nAR4UuEKQJ4YSjrDbHAutgzm6NgGY4vY4hKXzM5eXB0wDjMArdOybJ6ah0QKBgQCB\nYcOCR+s5tywaywYMLJ8nGZN0frYdnSsidRTe0sH9+swUW2Tu6EywV3sp2mnXVtik\nPlu7NRU5UHToo/VbPqYbcs2seBATx93/lWTgONOH+rBrJbSLe3q/+f15lpayKl4Z\nF477dkyp0aW0lDAQHeX7Cd9rbvgj9SwEzFnQGYgnuQKBgGxT13fTb7PmdMra3jJR\nn6uY8wsksvklXUzdhNoQEFpdAvFKB12kWMyq6mdmV27WKmyD5akDTX0JQ8Ds3uGf\nD3Rmqy/gs/JzMOxUA9hvQ0IjLNpcHN4GUFU4gb5mFA0rCXPwainJP04ZzpAqbawM\nNbuDOFIGlp21oTcRXpjUigB8\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-tsjgu@frank-de-pratende-bank.iam.gserviceaccount.com",
+  "client_id": "108134895343723204218",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-tsjgu%40frank-de-pratende-bank.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
