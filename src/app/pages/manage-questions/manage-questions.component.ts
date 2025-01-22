@@ -20,26 +20,25 @@ export class ManageQuestionsComponent {
   }
 
   ngOnInit(): void {
-    this.getCategories();
+    this.getQuestions();
   }
 
-  getCategories() {
-    this.categories$ = this.categoryService.getCategories();
+  getQuestions() {
+    this.questions$ = this.apiService.getQuestions();
   }
 
   add() {
-    //Navigate to form in add mode
-    this.router.navigate(['admin/category/form'], { state: { mode: 'add' } });
+    this.router.navigate(['question/form'], { state: { mode: 'add' } });
   }
 
   edit(id: number) {
     //Navigate to form in edit mode
-    this.router.navigate(['admin/category/form'], { state: { id: id, mode: 'edit' } });
+    this.router.navigate(['question/form'], { state: { id: id, mode: 'edit' } });
   }
 
   delete(id: number) {
-    this.categoryService.deleteCategory(id).subscribe({
-      next: (v) => this.getCategories(),
+    this.apiService.deleteQuestion(id).subscribe({
+      next: (v) => this.getQuestions(),
       error: (e) => this.errorMessage = e.message
     });
   }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Bench } from '../interfaces/bench';
 import { Question } from '../interfaces/question';
@@ -10,8 +10,8 @@ import { Answer } from '../interfaces/answer';
   providedIn: 'root'
 })
 export class ApiService {
-
-  eclipseUrl: string = 'https://localhost:7214/api/';
+  eclipseUrl: string = 'https://dev1.sebastiaandaniels.com/';
+  // 'https://p4-frank.azurewebsites.net/api/';
 
   constructor(private httpClient: HttpClient) {
   }
