@@ -25,6 +25,14 @@
           >
             Login
           </a>
+          <a 
+            routerLink="/questions" 
+            routerLinkActive="font-bold text-red-700" 
+            [routerLinkActiveOptions]="{ exact: true }" 
+            class="hover:underline"
+          >
+            Questions
+          </a>
         </div>
         <!-- Mobile Menu Button -->
         <div class="md:hidden flex items-center">
