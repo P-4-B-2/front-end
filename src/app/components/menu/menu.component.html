@@ -17,15 +17,14 @@
           >
             Home
           </a>
-          <a 
-            routerLink="/login" 
-            routerLinkActive="font-bold text-red-700" 
-            [routerLinkActiveOptions]="{ exact: true }" 
-            class="hover:underline"
-          >
-            Login
-          </a>
-          <a 
+          <ng-container *ngIf="isLoggedIn$ | async; else loginButton">
+            <a 
+              (click)="logout()" 
+              class="hover:underline font-bold text-red-700"
+            >
+              Logout
+            </a>
+            <a 
             routerLink="/questions" 
             routerLinkActive="font-bold text-red-700" 
             [routerLinkActiveOptions]="{ exact: true }" 
@@ -33,6 +32,18 @@
           >
             Questions
           </a>
+          </ng-container>
+  
+          <ng-template #loginButton>
+            <a 
+              routerLink="/login" 
+              routerLinkActive="font-bold text-red-700" 
+              [routerLinkActiveOptions]="{ exact: true }" 
+              class="hover:underline"
+            >
+              Login
+            </a>
+          </ng-template>
         </div>
         <!-- Mobile Menu Button -->
         <div class="md:hidden flex items-center">

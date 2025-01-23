@@ -12,6 +12,7 @@ import { ScrollToTopService } from './services/scroll-to-top-service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
+
 export class AppComponent {
   title = 'bench-frontend';
   constructor(private scrollToTopService: ScrollToTopService) {
