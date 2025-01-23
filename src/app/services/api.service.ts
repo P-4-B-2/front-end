@@ -10,7 +10,8 @@ import { Answer } from '../interfaces/answer';
   providedIn: 'root',
 })
 export class ApiService {
-  private eclipseUrl: string = 'https://p4-frank.azurewebsites.net/api/';
+  // private eclipseUrl: string = 'https://p4-frank.azurewebsites.net/api/';
+  private eclipseUrl: string = 'https://dev1.sebastiaandaniels.com/';
   // private eclipseUrl: string = 'https://localhost:7081/api/';
 
   constructor(private httpClient: HttpClient) {}
