@@ -25,6 +25,14 @@
           >
             Login
           </a>
+          <a 
+            routerLink="/questions" 
+            routerLinkActive="font-bold text-red-700" 
+            [routerLinkActiveOptions]="{ exact: true }" 
+            class="hover:underline"
+          >
+            Questions
+          </a>
         </div>
         <!-- Mobile Menu Button -->
         <div class="md:hidden flex items-center">
@@ -47,7 +55,7 @@
     >
       <a routerLink="/" routerLinkActive="font-bold text-black" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMobileMenu()" class="block px-4 py-2 hover:underline">Home</a>
       <a routerLink="/login" routerLinkActive="font-bold text-black" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMobileMenu()" class="block px-4 py-2 hover:underline">Login   </a>
-
+      
     </div>
   </nav>
   
