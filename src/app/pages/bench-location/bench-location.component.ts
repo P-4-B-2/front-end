@@ -25,9 +25,9 @@ export class BenchLocationComponent implements OnInit {
   
   selectedLat = this.defaultLat;
   selectedLng = this.defaultLng;
-  showModal = false; // Control the visibility of the modal
-  modalLat: number = 0;
-  modalLng: number = 0;
+  showModal = false;
+  modalLat: string = '';
+  modalLng: string = '';
   
   ngOnInit(): void {
     this.initMap();
@@ -82,9 +82,18 @@ export class BenchLocationComponent implements OnInit {
 
   saveChanges(): void {
     console.log('New location saved:', this.selectedLat, this.selectedLng);
-    this.modalLat = this.selectedLat;
-    this.modalLng = this.selectedLng;
-    this.showModal = true; // Show the modal when location is saved
+    this.modalLat = this.convertToDMS(this.selectedLat);
+    this.modalLng = this.convertToDMS(this.selectedLng);
+    this.showModal = true;
+
+
+    // ON SAVE:
+    // First, we need to add a location, we need to get its ID back
+    // Next, we can create a new History.
+    // To this, Add the bench ID (1)
+    // We need to get the previous status, since that hasn't changed.
+    // We can add this statusID to the history
+    // Finally we can add the location ID
   }
 
   closeModal(): void {
@@ -93,5 +102,16 @@ export class BenchLocationComponent implements OnInit {
 
   get isDefaultLocation(): boolean {
     return this.selectedLat === this.defaultLat && this.selectedLng === this.defaultLng;
+  }
+
+  // Convert decimal degrees to degrees, minutes, seconds (DMS)
+  private convertToDMS(degrees: number): string {
+    const deg = Math.floor(degrees);
+    const min = Math.floor((degrees - deg) * 60);
+    const sec = ((degrees - deg - min / 60) * 3600);
+
+    const direction = deg >= 0 ? (degrees === this.selectedLat ? 'N' : 'E') : (degrees === this.selectedLat ? 'S' : 'W');
+
+    return `${Math.abs(deg)}° ${Math.abs(min)}' ${Math.abs(sec)}" ${direction}`;
   }
 }
