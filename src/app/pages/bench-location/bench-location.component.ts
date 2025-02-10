@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { NgClass } from '@angular/common';
+import { ApiService } from '../../services/api.service';
+import { Observable } from 'rxjs';
+import { Bench } from '../../interfaces/bench';
 
 @Component({
   selector: 'app-bench-location',
@@ -10,8 +13,13 @@ import { NgClass } from '@angular/common';
   styleUrl: './bench-location.component.css'
 })
 export class BenchLocationComponent implements OnInit {
+
+  constructor(private apiService: ApiService) {
+  }
+
   private map!: L.Map;
   private marker!: L.Marker;
+  private bench!: Observable<Bench>;
   private defaultLat = 51.16405955699206;
   private defaultLng = 4.988548279070529;
   
@@ -20,10 +28,14 @@ export class BenchLocationComponent implements OnInit {
   
   ngOnInit(): void {
     this.initMap();
+    this.bench = this.apiService.getBenchId(1);
+    console.log(this.bench)
   }
 
   private initMap(): void {
-    this.map = L.map('map').setView([this.defaultLat, this.defaultLng], 13); // Geel
+    this.map = L.map('map', {
+      attributionControl: false // Disable attribution control
+    }).setView([this.defaultLat, this.defaultLng], 13); // Geel
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
