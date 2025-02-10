@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Question } from '../interfaces/question';
-import { ApiService } from '../services/api.service';
+
 import { Router } from '@angular/router';
 import { FormsModule, NgModel } from '@angular/forms';
+import { ApiService } from '../../services/api.service';
+import { Question } from '../../interfaces/question';
 
 @Component({
   selector: 'app-questions-form',

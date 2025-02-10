@@ -3,5 +3,5 @@ export interface Question {
     text: string,
     // madeAt: Date,
     // isActive: boolean,
-    // orderNumber: number;
+    // orderNumber: number; 
 }

@@ -40,6 +40,15 @@
             >
             Bench Location
             </a>
+          </a>
+          <a 
+            routerLink="/conversations" 
+            routerLinkActive="font-bold text-red-700" 
+            [routerLinkActiveOptions]="{ exact: true }" 
+            class="hover:underline"
+          >
+            Conversations
+          </a>
           </ng-container>
   
           <ng-template #loginButton>

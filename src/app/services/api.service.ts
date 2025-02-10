@@ -10,9 +10,10 @@ import { Answer } from '../interfaces/answer';
   providedIn: 'root',
 })
 export class ApiService {
-  private eclipseUrl: string = 'https://p4-frank.azurewebsites.net/api/';
+  // private eclipseUrl: string = 'https://p4-frank.azurewebsites.net/api/';
   // private eclipseUrl: string = 'https://dev1.sebastiaandaniels.com/';
   // private eclipseUrl: string = 'https://localhost:7081/api/';
+  private eclipseUrl: string = 'http://localhost:5045/api/'
 
   constructor(private httpClient: HttpClient) {}
 
@@ -46,6 +47,10 @@ export class ApiService {
 
   getQuestions(): Observable<Question[]> {
     return this.httpClient.get<Question[]>(this.eclipseUrl + 'questions', { headers: this.getHeaders() });
+  }
+
+  getActiveQuestions(): Observable<Question[]> {
+    return this.httpClient.get<Question[]>(this.eclipseUrl + 'questions/active', { headers: this.getHeaders() });
   }
 
   getQuestionById(id: number): Observable<Question> {
@@ -91,6 +96,12 @@ export class ApiService {
   getAnswerById(id: number): Observable<Answer> {
     return this.httpClient.get<Answer>(`${this.eclipseUrl}answers/${id}`, { headers: this.getHeaders() });
   }
+
+  getAnswersByConversationId(conversationId: number): Observable<Answer[]> {
+    return this.httpClient.get<Answer[]>(`${this.eclipseUrl}answers/conversation/${conversationId}`, { headers: this.getHeaders() });
+  }
+
+
 
   postAnswer(answer: Answer): Observable<Answer> {
     return this.httpClient.post<Answer>(this.eclipseUrl + 'answers', answer, { headers: this.getHeaders() });

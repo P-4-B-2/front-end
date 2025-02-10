@@ -1,0 +1,29 @@
+<div class="container mx-auto px-6 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        @for (conversation of conversations$ | async; track conversation.id) {
+        <div class="p-8 bg-white shadow-lg rounded-2xl border border-gray-200 relative overflow-hidden">
+            <div class="mb-4 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-gray-800">Conversation #{{conversation.id}}</h2>
+                <a class="text-blue-600 font-semibold hover:underline" [routerLink]="['/conversations', conversation.id]">View Details</a>
+            </div>
+            <p class="text-gray-600 text-sm"><strong>Start:</strong> {{conversation.startDatetime | date:'short'}}</p>
+            <p class="text-gray-600 text-sm"><strong>End:</strong> {{conversation.endDatetime | date:'short'}}</p>
+            <div class="mt-6">
+                <strong class="text-gray-700">Sentiment:</strong>
+                <div class="mt-2 bg-gray-200 rounded-full h-3 w-full">
+                    <div class="h-3 rounded-full" [ngClass]="{
+                        'bg-red-600': conversation.sentiment < 30,
+                        'bg-orange-500': conversation.sentiment >= 30 && conversation.sentiment < 50,
+                        'bg-yellow-400': conversation.sentiment >= 50 && conversation.sentiment < 70,
+                        'bg-green-500': conversation.sentiment >= 70
+                    }" [style.width.%]="conversation.sentiment"></div>
+                </div>
+            </div>
+            <div class="mt-6">
+                <strong class="text-gray-700">Summary:</strong>
+                <p class="text-gray-800 text-sm leading-relaxed">{{conversation.summary}}</p>
+            </div>
+        </div>
+        }
+    </div>
+</div>
