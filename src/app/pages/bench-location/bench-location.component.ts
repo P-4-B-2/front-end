@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
-import { NgClass } from '@angular/common';
+import { NgClass, CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
 import { Observable } from 'rxjs';
 import { Bench } from '../../interfaces/bench';
@@ -8,9 +8,9 @@ import { Bench } from '../../interfaces/bench';
 @Component({
   selector: 'app-bench-location',
   standalone: true,
-  imports: [NgClass],
+  imports: [NgClass, CommonModule],
   templateUrl: './bench-location.component.html',
-  styleUrl: './bench-location.component.css'
+  styleUrls: ['./bench-location.component.css']
 })
 export class BenchLocationComponent implements OnInit {
 
@@ -25,6 +25,9 @@ export class BenchLocationComponent implements OnInit {
   
   selectedLat = this.defaultLat;
   selectedLng = this.defaultLng;
+  showModal = false; // Control the visibility of the modal
+  modalLat: number = 0;
+  modalLng: number = 0;
   
   ngOnInit(): void {
     this.initMap();
@@ -37,8 +40,15 @@ export class BenchLocationComponent implements OnInit {
       attributionControl: false // Disable attribution control
     }).setView([this.defaultLat, this.defaultLng], 13); // Geel
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
+    // Add OpenStreetMap tile layer with its attribution
+    const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap' // Only OpenStreetMap attribution
+    }).addTo(this.map);
+
+    // Manually add the attribution control with the OpenStreetMap attribution
+    L.control.attribution({
+      position: 'bottomright', // Positioning the attribution on the bottom-right
+      prefix: '' // Don't include the default Leaflet attribution
     }).addTo(this.map);
 
     // Initialize marker at default location
@@ -72,6 +82,13 @@ export class BenchLocationComponent implements OnInit {
 
   saveChanges(): void {
     console.log('New location saved:', this.selectedLat, this.selectedLng);
+    this.modalLat = this.selectedLat;
+    this.modalLng = this.selectedLng;
+    this.showModal = true; // Show the modal when location is saved
+  }
+
+  closeModal(): void {
+    this.showModal = false; // Hide the modal
   }
 
   get isDefaultLocation(): boolean {
