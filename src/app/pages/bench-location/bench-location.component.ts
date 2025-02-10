@@ -32,6 +32,8 @@ export class BenchLocationComponent implements OnInit {
   ngOnInit(): void {
     this.initMap();
     this.bench = this.apiService.getBenchId(1);
+    // On INIT, We need to fetch the current Status (For later), and location of the last Bench History
+    // Fetch all benches
     console.log(this.bench)
   }
 
@@ -112,6 +114,6 @@ export class BenchLocationComponent implements OnInit {
 
     const direction = deg >= 0 ? (degrees === this.selectedLat ? 'N' : 'E') : (degrees === this.selectedLat ? 'S' : 'W');
 
-    return `${Math.abs(deg)}° ${Math.abs(min)}' ${Math.abs(sec)}" ${direction}`;
+    return `${Math.abs(deg)}° ${Math.abs(min)}' ${Math.abs(sec).toFixed(2)}" ${direction}`;
   }
 }
