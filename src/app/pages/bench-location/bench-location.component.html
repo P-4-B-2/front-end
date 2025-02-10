@@ -1,0 +1,36 @@
+<div class="container mx-auto mt-8 w-10/12 flex flex-col">
+    <h1 class="text-3xl">Bench Location</h1>
+    <div id="map" class="h-[300px] w-full mt-6 mb-6"></div>
+
+    <button 
+  (click)="saveChanges()" 
+  [disabled]="isDefaultLocation"
+  [ngClass]="{
+    'bg-gray-400 text-gray-200 cursor-not-allowed': isDefaultLocation, 
+    'bg-sky-500 text-sky-100 hover:bg-sky-600 cursor-pointer': !isDefaultLocation
+  }"
+  class="px-4 py-2 rounded-md mb-4 transition-all duration-200 w-40 self-center"
+>
+  Save changes
+</button>
+
+<!-- Modal -->
+<div id="modal" *ngIf="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-1/3">
+      <h3 class="text-xl font-bold">New location saved</h3>
+      <p class="mt-2">Latitude: {{ modalLat }}</p>
+      <p>Longitude: {{ modalLng }}</p>
+      <button 
+        (click)="closeModal()" 
+        class="mt-4 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+      >
+        OK
+      </button>
+    </div>
+  </div>
+
+</div>
+
+
+
+
