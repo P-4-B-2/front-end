@@ -24,7 +24,7 @@ export class ManageQuestionsComponent {
   }
 
   getQuestions() {
-    this.questions$ = this.apiService.getQuestions();
+    this.questions$ = this.apiService.getActiveQuestions();
   }
 
   add() {
