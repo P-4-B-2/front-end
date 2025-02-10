@@ -5,14 +5,13 @@ import { ManageQuestionsComponent } from './pages/manage-questions/manage-questi
 import { QuestionsFormComponent } from './pages/questions-form/questions-form.component';
 import { ConversationsPageComponent } from './pages/conversations-page/conversations-page.component';
 import { ConversationsDetailPageComponent } from './pages/conversations-detail-page/conversations-detail-page.component';
+import { AuthGuard } from '../auth/auth.guard';
 
 export const routes: Routes = [
     { path: '', component: HomepageComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'questions', component: ManageQuestionsComponent },
-    { path: 'question/form', component: QuestionsFormComponent },
-    { path: 'conversations', component: ConversationsPageComponent },
-    { path: 'conversations/:id', component: ConversationsDetailPageComponent },
-    
-    
+    { path: 'conversations', component: ConversationsPageComponent, canActivate: [AuthGuard] },
+    { path: 'conversations/:id', component: ConversationsDetailPageComponent, canActivate: [AuthGuard] },
+    { path: 'questions', component: ManageQuestionsComponent, canActivate: [AuthGuard] },
+    { path: 'question/form', component: QuestionsFormComponent, canActivate: [AuthGuard] },
 ];

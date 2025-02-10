@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../../auth/auth.service';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { FormsModule  } from '@angular/forms';
@@ -9,7 +9,7 @@ import { FormsModule  } from '@angular/forms';
   standalone: true,
   imports: [NgIf, FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 
 export class LoginComponent {
@@ -19,11 +19,13 @@ export class LoginComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  login() {
-    this.authService.login(this.email, this.password).then(
-      () => {
-        this.router.navigate(['/']);
-      },
+  get isLoginDisabled(): boolean {
+    return !(this.email && this.password);
+  }
+
+  loginWithGoogle() {
+    this.authService.loginWithGoogle().then(
+      () => this.router.navigate(['/']),
       (error) => {
         this.errorMessage = error.message;
       }
