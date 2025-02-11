@@ -12,9 +12,11 @@ export class AuthService {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(this.auth, provider);
-  
+ 
       const userEmail = result.user.email;
-  
+      const user = result.user;
+      const token = await user.getIdToken();
+      localStorage.setItem('authToken', token);
       return result.user;
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -22,6 +24,19 @@ export class AuthService {
       } else {
         throw new Error("An unexpected error occurred");
       }
+    }
+  }
+
+  async loginWithEmail(email: string, password: string) {
+    try {
+      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      console.log('User signed in:', userCredential.user);
+      const token = await userCredential.user.getIdToken();
+      localStorage.setItem('authToken', token);
+      return userCredential.user;
+    } catch (error) {
+      // console.error('Login error:', error.message);
+      throw error;
     }
   }
 
