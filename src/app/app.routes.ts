@@ -9,9 +9,11 @@ import { AuthGuard } from '../auth/auth.guard';
 
 export const routes: Routes = [
     { path: '', component: HomepageComponent },
-    { path: 'conversations', component: ConversationsPageComponent, canActivate: [AuthGuard] },
+    //{ path: 'conversations', component: ConversationsPageComponent, canActivate: [AuthGuard] },
+    { path: 'conversations', component: ConversationsPageComponent },
     { path: 'conversations/:id', component: ConversationsDetailPageComponent, canActivate: [AuthGuard] },
     { path: 'questions', component: ManageQuestionsComponent, canActivate: [AuthGuard] },
     { path: 'question/form', component: QuestionsFormComponent, canActivate: [AuthGuard] },
-    { path: 'bench', component: BenchLocationComponent, canActivate: [AuthGuard] },
+    //{ path: 'bench', component: BenchLocationComponent, canActivate: [AuthGuard] },
+    { path: 'bench', component: BenchLocationComponent},
 ];

@@ -3,11 +3,12 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../../auth/auth.service';
+import { HomeCardComponent } from "../../components/home-card/home-card.component";
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, HomeCardComponent],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })

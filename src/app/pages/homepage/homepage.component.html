@@ -1,33 +1,38 @@
 <div class="container min-h-screen flex flex-col mx-auto mt-8 w-10/12">
   <!-- User is NOT Logged in -->
-    
-  <ng-container *ngIf="!(isLoggedIn$ | async)">
-    <div class="login-container max-w-lg mx-auto mt-12 p-6 bg-white shadow-lg rounded-lg">
+
+  <ng-container *ngIf="(isLoggedIn$ | async)">
+    <div
+      class="login-container max-w-lg mx-auto mt-12 p-6 bg-white shadow-lg rounded-lg">
       <h2 class="text-3xl font-semibold text-center mb-6">Login</h2>
       <div class="my-6 border-t border-gray-300"></div>
       <div class="mt-6 text-center">
         <button
           type="button"
           (click)="loginWithGoogle()"
-          class="w-full py-3 px-4 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
-        >
+          class="w-full py-3 px-4 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
           Login with Google
         </button>
-        <div *ngIf="errorMessage" class="error mt-4 bg-red-100 text-red-800 p-3 rounded-md">
+        <div *ngIf="errorMessage"
+          class="error mt-4 bg-red-100 text-red-800 p-3 rounded-md">
           <p>{{ errorMessage }}</p>
         </div>
       </div>
     </div>
-    
   </ng-container>
 
-  <ng-container *ngIf="isLoggedIn$ | async">
+  <ng-container *ngIf="!(isLoggedIn$ | async)">
     <!-- User is logged in -->
     <main class="flex-grow container mx-auto px-4 py-8">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Cards -->
+        <app-home-card buttonLink="bench" title="Locatie" subtitle="Beheer de locatie van de bank"></app-home-card>
+        <app-home-card buttonLink="questions" title="Beheer vragen"></app-home-card>
+        <app-home-card buttonLink="bench"></app-home-card>
+        <app-home-card buttonLink="bench"></app-home-card>
+        <app-home-card buttonLink="bench"></app-home-card>
+        <app-home-card buttonLink="bench"></app-home-card>
+        <app-home-card buttonLink="bench"></app-home-card>
       </div>
     </main>
-
   </ng-container>
-  </div>
+</div>
