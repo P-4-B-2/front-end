@@ -1,7 +1,7 @@
 <div class="container min-h-screen flex flex-col mx-auto mt-8 w-10/12">
   <!-- User is NOT Logged in -->
 
-  <ng-container *ngIf="(isLoggedIn$ | async)">
+  <ng-container *ngIf="!(isLoggedIn$ | async)">
     <div
       class="login-container max-w-lg mx-auto mt-12 p-6 bg-white shadow-lg rounded-lg">
       <h2 class="text-3xl font-semibold text-center mb-6">Login</h2>
@@ -21,13 +21,13 @@
     </div>
   </ng-container>
 
-  <ng-container *ngIf="!(isLoggedIn$ | async)">
+  <ng-container *ngIf="(isLoggedIn$ | async)">
     <!-- User is logged in -->
     <main class="flex-grow container mx-auto px-4 py-8">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <app-home-card buttonLink="bench" title="Locatie" subtitle="Beheer de locatie van de bank"></app-home-card>
-        <app-home-card buttonLink="questions" title="Beheer vragen"></app-home-card>
-        <app-home-card buttonLink="bench"></app-home-card>
+        <app-home-card buttonLink="bench" title="Locatie" subtitle="Beheer de locatie van de bank" image="/assets/icons/bench.png"></app-home-card>
+        <app-home-card buttonLink="questions" title="Beheer vragen" subtitle="De vragen die de bank stelt" image="/assets/icons/question.png"></app-home-card>
+        <app-home-card buttonLink="conversations" title="Conversaties" subtitle="Wat zeggen de klanten?" image="/assets/icons/conversation.png"></app-home-card>
         <app-home-card buttonLink="bench"></app-home-card>
         <app-home-card buttonLink="bench"></app-home-card>
         <app-home-card buttonLink="bench"></app-home-card>
