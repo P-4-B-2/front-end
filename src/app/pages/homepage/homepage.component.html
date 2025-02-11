@@ -1,9 +1,9 @@
-<div class="container min-h-screen flex flex-col mx-auto mt-8 w-10/12">
+<div class="container flex flex-col mx-auto mt-8 w-10/12">
   <!-- User is NOT Logged in -->
 
   <ng-container *ngIf="!(isLoggedIn$ | async)">
     <div
-      class="login-container max-w-lg mx-auto mt-12 p-6 bg-white shadow-lg rounded-lg">
+      class="login-container max-w-lg mx-auto mt-24 p-6 bg-white shadow-lg rounded-lg">
       <h2 class="text-3xl font-semibold text-center mb-6">Login</h2>
       <div class="my-6 border-t border-gray-300"></div>
       <div class="mt-6 text-center">
