@@ -12,9 +12,11 @@ export class AuthService {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(this.auth, provider);
-  
+ 
       const userEmail = result.user.email;
-  
+      const user = result.user;
+      const token = await user.getIdToken();
+      localStorage.setItem('authToken', token);
       return result.user;
     } catch (error: unknown) {
       if (error instanceof Error) {
