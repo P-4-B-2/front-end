@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../../auth/auth.service';
 import { HomeCardComponent } from "../../components/home-card/home-card.component";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [RouterModule, CommonModule, HomeCardComponent],
+  imports: [RouterModule, CommonModule, HomeCardComponent, FormsModule],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })
@@ -27,6 +28,15 @@ export class HomepageComponent {
 
   get isLoginDisabled(): boolean {
     return !(this.email && this.password);
+  }
+
+  async login() {
+    try {
+      const user = await this.authService.loginWithEmail(this.email, this.password);
+      console.log('Logged in:', user);
+    } catch (error) {
+      // console.error('Login failed:', error.message);
+    }
   }
 
   loginWithGoogle() {
