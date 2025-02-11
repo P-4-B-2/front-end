@@ -27,6 +27,19 @@ export class AuthService {
     }
   }
 
+  async loginWithEmail(email: string, password: string) {
+    try {
+      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      console.log('User signed in:', userCredential.user);
+      const token = await userCredential.user.getIdToken();
+      localStorage.setItem('authToken', token);
+      return userCredential.user;
+    } catch (error) {
+      // console.error('Login error:', error.message);
+      throw error;
+    }
+  }
+
   logout() {
     localStorage.removeItem('authToken');
     return signOut(this.auth).then(() => this.router.navigate(['/login']));
