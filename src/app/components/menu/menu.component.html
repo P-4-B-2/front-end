@@ -9,58 +9,14 @@
         </div>
         <!-- Desktop Menu -->
         <div class="hidden md:flex space-x-8">
-          <a 
-            routerLink="/" 
-            routerLinkActive="font-bold text-red-700" 
-            [routerLinkActiveOptions]="{ exact: true }" 
-            class="hover:underline"
-          >
-            Home
-          </a>
-          <ng-container *ngIf="isLoggedIn$ | async; else loginButton">
+          <ng-container *ngIf="isLoggedIn$ | async">
             <a 
               (click)="logout()" 
-              class="hover:underline font-bold text-red-700"
+              class="hover:underline"
             >
               Logout
             </a>
-            <a 
-            routerLink="/questions" 
-            routerLinkActive="font-bold text-red-700" 
-            [routerLinkActiveOptions]="{ exact: true }" 
-            class="hover:underline"
-            >
-            Questions
-            </a>
-            <a 
-            routerLink="/bench" 
-            routerLinkActive="font-bold text-red-700" 
-            [routerLinkActiveOptions]="{ exact: true }" 
-            class="hover:underline"
-            >
-            Bench Location
-            </a>
-          
-          <a 
-            routerLink="/conversations" 
-            routerLinkActive="font-bold text-red-700" 
-            [routerLinkActiveOptions]="{ exact: true }" 
-            class="hover:underline"
-          >
-            Conversations
-          </a>
           </ng-container>
-  
-          <ng-template #loginButton>
-            <a 
-              routerLink="/login" 
-              routerLinkActive="font-bold text-red-700" 
-              [routerLinkActiveOptions]="{ exact: true }" 
-              class="hover:underline"
-            >
-              Login
-            </a>
-          </ng-template>
         </div>
         <!-- Mobile Menu Button -->
         <div class="md:hidden flex items-center">
