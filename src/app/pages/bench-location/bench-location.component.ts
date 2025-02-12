@@ -39,14 +39,11 @@ export class BenchLocationComponent implements OnInit {
     this.history.subscribe(histories => {
       if (histories.length > 0) {
         const latestHistory = histories.reduce((prev, current) => (prev.id > current.id ? prev : current));
-        console.log('Location ID of the latest history:', latestHistory.locationId);
         
         // Fetch location by ID
         this.apiService.getLocationById(latestHistory.locationId).subscribe(location => {
           this.defaultLat = location.latitude;
           this.defaultLng = location.longitude;
-          
-          console.log('Updated default lat/lng:', this.defaultLat, this.defaultLng);
           
           // Initialize map only after coordinates are updated
           this.initMap();
@@ -55,7 +52,6 @@ export class BenchLocationComponent implements OnInit {
           this.selectedLng = this.defaultLng;
         });
       } else {
-        console.log('No history records found. Continuing with default lat and long');
         this.initMap(); // Initialize with default values if no history is found
       }
     });
@@ -107,7 +103,6 @@ export class BenchLocationComponent implements OnInit {
   }
 
   saveChanges(): void {
-    console.log('New location saved:', this.selectedLat, this.selectedLng);
     this.modalLat = this.convertToDMS(this.selectedLat);
     this.modalLng = this.convertToDMS(this.selectedLng);
     this.showModal = true;
@@ -123,8 +118,6 @@ export class BenchLocationComponent implements OnInit {
 
     this.apiService.postLocation(location).subscribe(locationResponse => {
       if (locationResponse.id !== undefined) {  // Ensure location ID is defined
-        console.log('New Location ID:', locationResponse.id);
-    
         // Step 2: Fetch the last history entry to get its statusId
         this.apiService.getHistory().subscribe(histories => {
           if (histories.length > 0) {
@@ -140,12 +133,10 @@ export class BenchLocationComponent implements OnInit {
     
             // Step 4: Save the History
             this.apiService.postHistory(newHistory).subscribe(historyResponse => {
-              console.log('New History Created:', historyResponse);
 
               this.reloadMap(locationResponse.latitude, locationResponse.longitude);
             });
           } else {
-            console.log('No previous history found, cannot create a new history.');
           }
         });
       } else {
