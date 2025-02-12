@@ -4,6 +4,8 @@ import { NgClass, CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
 import { Observable } from 'rxjs';
 import { Bench } from '../../interfaces/bench';
+import { History } from '../../interfaces/history';
+import { Location } from '../../interfaces/location';
 
 @Component({
   selector: 'app-bench-location',
@@ -17,9 +19,10 @@ export class BenchLocationComponent implements OnInit {
   constructor(private apiService: ApiService) {
   }
 
+  private location!: Observable<Location>
   private map!: L.Map;
   private marker!: L.Marker;
-  private bench!: Observable<Bench>;
+  private history!: Observable<History[]>;
   private defaultLat = 51.16405955699206;
   private defaultLng = 4.988548279070529;
   
@@ -30,11 +33,32 @@ export class BenchLocationComponent implements OnInit {
   modalLng: string = '';
   
   ngOnInit(): void {
-    this.initMap();
-    this.bench = this.apiService.getBenchId(1);
+    this.history = this.apiService.getHistory();
     // On INIT, We need to fetch the current Status (For later), and location of the last Bench History
     // Fetch all benches
-    console.log(this.bench)
+    this.history.subscribe(histories => {
+      if (histories.length > 0) {
+        const latestHistory = histories.reduce((prev, current) => (prev.id > current.id ? prev : current));
+        console.log('Location ID of the latest history:', latestHistory.locationId);
+        
+        // Fetch location by ID
+        this.apiService.getLocationById(latestHistory.locationId).subscribe(location => {
+          this.defaultLat = location.latitude;
+          this.defaultLng = location.longitude;
+          
+          console.log('Updated default lat/lng:', this.defaultLat, this.defaultLng);
+          
+          // Initialize map only after coordinates are updated
+          this.initMap();
+
+          this.selectedLat = this.defaultLat;
+          this.selectedLng = this.defaultLng;
+        });
+      } else {
+        console.log('No history records found. Continuing with default lat and long');
+        this.initMap(); // Initialize with default values if no history is found
+      }
+    });
   }
 
   private initMap(): void {

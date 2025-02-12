@@ -5,7 +5,8 @@ import { Bench } from '../interfaces/bench';
 import { Question } from '../interfaces/question';
 import { Conversation } from '../interfaces/conversation';
 import { Answer } from '../interfaces/answer';
-
+import { History } from '../interfaces/history';
+import { Location } from '../interfaces/location';
 @Injectable({
   providedIn: 'root',
 })
@@ -114,5 +115,17 @@ export class ApiService {
 
   deleteAnswer(id: number): Observable<Answer> {
     return this.httpClient.delete<Answer>(`${this.eclipseUrl}answers/${id}`, { headers: this.getHeaders() });
+  }
+
+  getHistory(): Observable<History[]> {
+    return this.httpClient.get<History[]>(this.eclipseUrl + 'histories', { headers: this.getHeaders() });
+  }
+
+  getLocations(): Observable<Location[]> {
+    return this.httpClient.get<Location[]>(this.eclipseUrl + 'locations', { headers: this.getHeaders() });
+  }
+
+  getLocationById(id: number): Observable<Location> {
+    return this.httpClient.get<Location>(`${this.eclipseUrl}locations/${id}`, { headers: this.getHeaders() });
   }
 }
