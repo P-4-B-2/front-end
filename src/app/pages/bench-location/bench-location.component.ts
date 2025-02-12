@@ -5,7 +5,7 @@ import { ApiService } from '../../services/api.service';
 import { Observable } from 'rxjs';
 import { Bench } from '../../interfaces/bench';
 import { History } from '../../interfaces/history';
-import { Location } from '../../interfaces/location';
+import { Location, LocationDto } from '../../interfaces/location';
 
 @Component({
   selector: 'app-bench-location',
@@ -115,11 +115,60 @@ export class BenchLocationComponent implements OnInit {
 
     // ON SAVE:
     // First, we need to add a location, we need to get its ID back
-    // Next, we can create a new History.
-    // To this, Add the bench ID (1)
-    // We need to get the previous status, since that hasn't changed.
-    // We can add this statusID to the history
-    // Finally we can add the location ID
+    const location: LocationDto = {
+      id: 0,
+      latitude: String(this.selectedLat),
+      longitude: String(this.selectedLng)
+    }
+
+    this.apiService.postLocation(location).subscribe(locationResponse => {
+      if (locationResponse.id !== undefined) {  // Ensure location ID is defined
+        console.log('New Location ID:', locationResponse.id);
+    
+        // Step 2: Fetch the last history entry to get its statusId
+        this.apiService.getHistory().subscribe(histories => {
+          if (histories.length > 0) {
+            const latestHistory = histories.reduce((prev, current) => (prev.id > current.id ? prev : current));
+            
+            // Step 3: Create the new History entry with the same statusId
+            const newHistory: History = {
+              id: 0,
+              benchId: 1, // Assuming bench ID is always 1, adjust if necessary
+              locationId: locationResponse.id!, // Newly created location ID
+              statusId: latestHistory.statusId // Keep the previous status
+            };
+    
+            // Step 4: Save the History
+            this.apiService.postHistory(newHistory).subscribe(historyResponse => {
+              console.log('New History Created:', historyResponse);
+
+              this.reloadMap(locationResponse.latitude, locationResponse.longitude);
+            });
+          } else {
+            console.log('No previous history found, cannot create a new history.');
+          }
+        });
+      } else {
+        console.error('Error: Location ID is undefined. Cannot create history.');
+      }
+    });
+
+    
+  }
+
+  private reloadMap(lat: string, lng: string): void {
+    this.defaultLat = parseFloat(lat);
+    this.defaultLng = parseFloat(lng);
+    this.selectedLat = this.defaultLat;
+    this.selectedLng = this.defaultLng;
+  
+    // Destroy existing map instance if needed
+    if (this.map) {
+      this.map.remove();
+    }
+  
+    // Reinitialize the map
+    this.initMap();
   }
 
   closeModal(): void {

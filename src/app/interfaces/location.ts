@@ -1,5 +1,11 @@
 export interface Location {
-    id: number,
+    id?: number,
     longitude: number,
     latitude: number;
+}
+
+export interface LocationDto {
+    id?: number,
+    longitude: string,
+    latitude: string;
 }
