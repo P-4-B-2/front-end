@@ -1,5 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, signOut, authState, GoogleAuthProvider, signInWithPopup, fetchSignInMethodsForEmail, linkWithPopup,  EmailAuthProvider, reauthenticateWithCredential, updatePassword, createUserWithEmailAndPassword, OAuthCredential, linkWithCredential, User, sendEmailVerification, getAuth } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, signOut, authState, GoogleAuthProvider, signInWithPopup, fetchSignInMethodsForEmail, linkWithPopup,  EmailAuthProvider, reauthenticateWithCredential, updatePassword, createUserWithEmailAndPassword, OAuthCredential, linkWithCredential, User, sendEmailVerification, getAuth, onIdTokenChanged } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 
@@ -7,7 +7,10 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private auth: Auth, private router: Router) {}
+  constructor(private auth: Auth, private router: Router) {
+    this.monitorAuthState();
+  }
+  
   async loginWithGoogle() {
     try {
       const provider = new GoogleAuthProvider();
@@ -25,6 +28,22 @@ export class AuthService {
         throw new Error("An unexpected error occurred");
       }
     }
+  }
+
+  private monitorAuthState() {
+    onIdTokenChanged(this.auth, async (user) => {
+      if (!user) {
+        this.logout();
+      } else {
+        try {
+          const token = await user.getIdToken();
+          localStorage.setItem('authToken', token);
+        } catch (error) {
+          console.error('Token refresh error:', error);
+          this.logout();
+        }
+      }
+    });
   }
 
   async loginWithEmail(email: string, password: string) {

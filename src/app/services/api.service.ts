@@ -5,15 +5,18 @@ import { Bench } from '../interfaces/bench';
 import { Question } from '../interfaces/question';
 import { Conversation } from '../interfaces/conversation';
 import { Answer } from '../interfaces/answer';
+import { History } from '../interfaces/history';
+import { Location } from '../interfaces/location';
+import { Status } from '../interfaces/status';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  private eclipseUrl: string = 'https://frankdepratendebank.azurewebsites.net/api/';
+  // private eclipseUrl: string = 'https://frankdepratendebank.azurewebsites.net/api/';
   // private eclipseUrl: string = 'https://p4-frank.azurewebsites.net/api/';
   // private eclipseUrl: string = 'https://dev1.sebastiaandaniels.com/';
-  // private eclipseUrl: string = 'https://localhost:7081/api/';
+  private eclipseUrl: string = 'https://localhost:7081/api/';
   // private eclipseUrl: string = 'http://localhost:5045/api/'
 
   constructor(private httpClient: HttpClient) {}
@@ -24,6 +27,14 @@ export class ApiService {
       'Content-Type': 'application/json',
       Authorization: token ? `Bearer ${token}` : '',
     });
+  }
+
+  getLocations(): Observable<Location[]> {
+    return this.httpClient.get<Location[]>(this.eclipseUrl + 'locations', { headers: this.getHeaders() });
+  }
+
+  getStatuses(): Observable<Status[]> {
+    return this.httpClient.get<Status[]>(this.eclipseUrl + 'status', { headers: this.getHeaders() });
   }
 
   getBenches(): Observable<Bench[]> {
@@ -102,8 +113,6 @@ export class ApiService {
     return this.httpClient.get<Answer[]>(`${this.eclipseUrl}answers/conversation/${conversationId}`, { headers: this.getHeaders() });
   }
 
-
-
   postAnswer(answer: Answer): Observable<Answer> {
     return this.httpClient.post<Answer>(this.eclipseUrl + 'answers', answer, { headers: this.getHeaders() });
   }
@@ -114,5 +123,21 @@ export class ApiService {
 
   deleteAnswer(id: number): Observable<Answer> {
     return this.httpClient.delete<Answer>(`${this.eclipseUrl}answers/${id}`, { headers: this.getHeaders() });
+  }
+
+  getHistory(): Observable<History[]> {
+    return this.httpClient.get<History[]>(this.eclipseUrl + 'histories', { headers: this.getHeaders() });
+  }
+
+  postHistory(history: History): Observable<History> {
+    return this.httpClient.post<History>(this.eclipseUrl + 'histories', history, { headers: this.getHeaders() });
+  }
+
+  putHistory(id: number, history: History): Observable<History> {
+    return this.httpClient.put<History>(`${this.eclipseUrl}histories/${id}`, history, { headers: this.getHeaders() });
+  }
+
+  deleteHistory(id: number): Observable<History> {
+    return this.httpClient.delete<History>(`${this.eclipseUrl}histories/${id}`, { headers: this.getHeaders() });
   }
 }

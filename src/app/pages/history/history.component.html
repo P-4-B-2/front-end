@@ -1,0 +1,21 @@
+<h1>Bench History</h1>
+
+<div *ngIf="!(histories$ | async)?.length">No history found.</div>
+<table *ngIf="(histories$ | async)?.length">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Bench Name</th>
+            <th>Location</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let history of histories$ | async">
+            <td>{{ history.id }}</td>
+            <td>{{ history.bench?.name }}</td>
+            <td>{{ history.location?.address || 'Fetching location...' }}</td>
+            <td>{{ history.status?.type }}</td>
+        </tr>
+    </tbody>
+</table>
