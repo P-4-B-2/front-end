@@ -1,13 +1,13 @@
-import { Bench } from './bench'; // Adjust the import paths as necessary
-import { Location } from './location'; // Adjust the import paths as necessary
-import { Status } from './status'; // Adjust the import paths as necessary
+import { Bench } from './bench';
+import { Location } from './location';
+import { Status } from './status';
 
 export interface History {
     id: number;
     benchId: number;
     locationId: number;
     statusId: number;
-    bench?: Bench; // Add this line
-    location?: Location; // Add this line
-    status?: Status; // Add this line
+    bench?: Bench;
+    location?: Location;
+    status?: Status;
 }

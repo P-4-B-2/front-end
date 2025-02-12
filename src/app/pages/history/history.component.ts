@@ -37,7 +37,7 @@ export class HistoryComponent {
               const location = locations.find(l => l.id === history.locationId);
               
               if (location) {
-                return this.getAddress(Number(location.latitude), Number(location.longitude)).pipe(
+                return this.getAddress(location.latitude, location.longitude).pipe(
                   map(address => ({
                     ...history,
                     bench: benches.find(b => b.id === history.benchId),

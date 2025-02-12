@@ -6,7 +6,7 @@ import { Question } from '../interfaces/question';
 import { Conversation } from '../interfaces/conversation';
 import { Answer } from '../interfaces/answer';
 import { History } from '../interfaces/history';
-import { Location } from '../interfaces/location';
+import { Location, LocationDto } from '../interfaces/location';
 import { Status } from '../interfaces/status';
 
 @Injectable({
@@ -27,10 +27,6 @@ export class ApiService {
       'Content-Type': 'application/json',
       Authorization: token ? `Bearer ${token}` : '',
     });
-  }
-
-  getLocations(): Observable<Location[]> {
-    return this.httpClient.get<Location[]>(this.eclipseUrl + 'locations', { headers: this.getHeaders() });
   }
 
   getStatuses(): Observable<Status[]> {
@@ -139,5 +135,17 @@ export class ApiService {
 
   deleteHistory(id: number): Observable<History> {
     return this.httpClient.delete<History>(`${this.eclipseUrl}histories/${id}`, { headers: this.getHeaders() });
+  }
+
+  getLocations(): Observable<Location[]> {
+    return this.httpClient.get<Location[]>(this.eclipseUrl + 'locations', { headers: this.getHeaders() });
+  }
+
+  getLocationById(id: number): Observable<Location> {
+    return this.httpClient.get<Location>(`${this.eclipseUrl}locations/${id}`, { headers: this.getHeaders() });
+  }
+
+  postLocation(location: LocationDto): Observable<LocationDto> {
+    return this.httpClient.post<LocationDto>(this.eclipseUrl + 'locations', location, { headers: this.getHeaders() });
   }
 }
