@@ -15,9 +15,9 @@ import { AsyncPipe } from '@angular/common';
 export class ManageQuestionsComponent {
   questions$!: Observable<Question[]>;
   errorMessage: string = '';
+  deleteId: number | null = null;
 
-  constructor(private apiService: ApiService, private router: Router) {
-  }
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit(): void {
     this.getQuestions();
@@ -32,15 +32,26 @@ export class ManageQuestionsComponent {
   }
 
   edit(id: number) {
-    //Navigate to form in edit mode
     this.router.navigate(['question/form'], { state: { id: id, mode: 'edit' } });
   }
 
-  delete(id: number) {
-    this.apiService.deleteQuestion(id).subscribe({
-      next: (v) => this.getQuestions(),
-      error: (e) => this.errorMessage = e.message
-    });
+  confirmDelete(id: number) {
+    this.deleteId = id;
+  }
+
+  cancelDelete() {
+    this.deleteId = null;
+  }
+
+  delete() {
+    if (this.deleteId !== null) {
+      this.apiService.deleteQuestion(this.deleteId).subscribe({
+        next: () => {
+          this.getQuestions();
+          this.deleteId = null;
+        },
+        error: (e) => (this.errorMessage = e.message),
+      });
+    }
   }
 }
-
