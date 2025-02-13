@@ -13,10 +13,10 @@ import { Status } from '../interfaces/status';
   providedIn: 'root',
 })
 export class ApiService {
-  // private eclipseUrl: string = 'https://frankdepratendebank.azurewebsites.net/api/';
+  private eclipseUrl: string = 'https://frankdepratendebank.azurewebsites.net/api/';
   // private eclipseUrl: string = 'https://p4-frank.azurewebsites.net/api/';
   // private eclipseUrl: string = 'https://dev1.sebastiaandaniels.com/';
-  private eclipseUrl: string = 'https://localhost:7081/api/';
+  // private eclipseUrl: string = 'https://localhost:7081/api/';
   // private eclipseUrl: string = 'http://localhost:5045/api/'
 
   constructor(private httpClient: HttpClient) {}
@@ -31,6 +31,14 @@ export class ApiService {
 
   getStatuses(): Observable<Status[]> {
     return this.httpClient.get<Status[]>(this.eclipseUrl + 'status', { headers: this.getHeaders() });
+  }
+
+  postStatus(status: Status): Observable<Status> {
+    return this.httpClient.post<Status>(this.eclipseUrl + 'status', status, { headers: this.getHeaders() });
+  }
+
+  putStatus(id: number, status: Status): Observable<Status> {
+    return this.httpClient.put<Status>(`${this.eclipseUrl}status/${id}`, status, { headers: this.getHeaders() });
   }
 
   getBenches(): Observable<Bench[]> {

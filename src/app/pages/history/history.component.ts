@@ -5,11 +5,12 @@ import { History } from '../../interfaces/history';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Status } from '../../interfaces/status';
 
 @Component({
   selector: 'app-conversations-page',
   standalone: true,
-  imports: [DatePipe, CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './history.component.html',
   styleUrl: './history.component.css'
 })
@@ -41,7 +42,7 @@ export class HistoryComponent {
                   map(address => ({
                     ...history,
                     bench: benches.find(b => b.id === history.benchId),
-                    location: { ...location, address }, // ✅ Ensure address is set
+                    location: { ...location, address },
                     status: statuses.find(s => s.id === history.statusId)
                   }))
                 );
@@ -64,16 +65,10 @@ export class HistoryComponent {
 
   getAddress(latitude: number, longitude: number): Observable<string> {
     if (!latitude || !longitude) return of('Invalid Coordinates');
-    console.log('Latitude:', latitude);
-    console.log('Longitude:', longitude);
-    
-    // Correct URL construction using template literals
     const url = "https://nominatim.openstreetmap.org/reverse?format=json&lat="+String(latitude)+"&lon="+String(longitude);
   
     return this.http.get<any>(url).pipe(
       map(response => {
-        console.log('Nominatim Response:', response); // Debugging log
-  
         if (response && response.address) {
           const { road, house_number, city, country } = response.address;
           return road && house_number
@@ -82,9 +77,39 @@ export class HistoryComponent {
         }
         return 'Address not found';
       }),
-      // Catch errors and return a message instead of failing silently
       map(address => address || 'Unknown Location'),
-      switchMap(address => of(address)), // Ensure we return an observable
+      switchMap(address => of(address)),
+    );
+  }  
+
+  toggleStatus(history: History): void {
+    if (!history.status) {
+      console.error('Status is undefined for history:', history);
+      return;
+    }
+
+    const newStatus: Status = {
+      id: history.status.id,
+      type: history.status.type === 'Active' ? 'Inactive' : 'Active',
+    };
+
+    this.apiService.putStatus(newStatus.id, newStatus).subscribe(
+      (updatedStatus) => {
+        this.histories$ = this.histories$.pipe(
+          map(histories =>
+            histories.map(h => {
+              if (h.id === history.id) {
+                return { ...h, status: newStatus };  // Update the status in the local object
+              }
+              return h;
+            })
+          )
+        );
+        this.getHistory();
+      },
+      (error) => {
+        console.error('Error updating status:', error);
+      }
     );
   }  
 

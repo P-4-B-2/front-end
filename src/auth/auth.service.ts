@@ -7,10 +7,7 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private auth: Auth, private router: Router) {
-    this.monitorAuthState();
-  }
-  
+  constructor(private auth: Auth, private router: Router) {}
   async loginWithGoogle() {
     try {
       const provider = new GoogleAuthProvider();
@@ -30,22 +27,6 @@ export class AuthService {
     }
   }
 
-  private monitorAuthState() {
-    onIdTokenChanged(this.auth, async (user) => {
-      if (!user) {
-        this.logout();
-      } else {
-        try {
-          const token = await user.getIdToken();
-          localStorage.setItem('authToken', token);
-        } catch (error) {
-          console.error('Token refresh error:', error);
-          this.logout();
-        }
-      }
-    });
-  }
-
   async loginWithEmail(email: string, password: string) {
     try {
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
@@ -61,7 +42,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('authToken');
-    return signOut(this.auth).then(() => this.router.navigate(['/login']));
+    return signOut(this.auth); //.then(() => this.router.navigate(['/login']));
   }
 
   get user(): Observable<any> {
