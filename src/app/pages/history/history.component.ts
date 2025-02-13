@@ -39,7 +39,7 @@ export class HistoryComponent {
               const location = locations.find(l => l.id === history.locationId);
   
               if (location) {
-                return timer(index * 100).pipe(
+                return timer(index * 2000).pipe(
                   switchMap(() =>
                     this.getAddress(location.latitude, location.longitude).pipe(
                       map(address => ({
