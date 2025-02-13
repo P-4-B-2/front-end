@@ -23,7 +23,7 @@ export class MenuComponent {
 
   logout() {
     this.authService.logout().then(() => {
-      this.router.navigate(['/']);
+      this.router.navigate(['/login']);
     });
   }
 

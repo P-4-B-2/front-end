@@ -3,7 +3,6 @@ import { AuthService } from '../../../auth/auth.service';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { FormsModule  } from '@angular/forms';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 
 @Component({
   selector: 'app-login',
