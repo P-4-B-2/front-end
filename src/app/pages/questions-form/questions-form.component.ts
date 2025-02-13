@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { FormsModule, NgModel } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { Question } from '../../interfaces/question';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-questions-form',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './questions-form.component.html',
   styleUrl: './questions-form.component.css'
 })
