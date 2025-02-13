@@ -1,7 +1,5 @@
 export interface Question {
-    id: number,
-    text: string,
-    // madeAt: Date,
-    // isActive: boolean,
-    // orderNumber: number; 
+    id: number;
+    text: string;
+    orderNumber: number;
 }
