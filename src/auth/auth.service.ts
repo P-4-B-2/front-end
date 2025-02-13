@@ -1,5 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, signOut, authState, GoogleAuthProvider, signInWithPopup, fetchSignInMethodsForEmail, linkWithPopup,  EmailAuthProvider, reauthenticateWithCredential, updatePassword, createUserWithEmailAndPassword, OAuthCredential, linkWithCredential, User, sendEmailVerification, getAuth } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, signOut, authState, GoogleAuthProvider, signInWithPopup, fetchSignInMethodsForEmail, linkWithPopup,  EmailAuthProvider, reauthenticateWithCredential, updatePassword, createUserWithEmailAndPassword, OAuthCredential, linkWithCredential, User, sendEmailVerification, getAuth, onIdTokenChanged } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 
@@ -42,7 +42,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('authToken');
-    return signOut(this.auth).then(() => this.router.navigate(['/login']));
+    return signOut(this.auth); //.then(() => this.router.navigate(['/login']));
   }
 
   get user(): Observable<any> {

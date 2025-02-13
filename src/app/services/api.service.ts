@@ -7,6 +7,8 @@ import { Conversation } from '../interfaces/conversation';
 import { Answer } from '../interfaces/answer';
 import { History } from '../interfaces/history';
 import { Location, LocationDto } from '../interfaces/location';
+import { Status } from '../interfaces/status';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -25,6 +27,18 @@ export class ApiService {
       'Content-Type': 'application/json',
       Authorization: token ? `Bearer ${token}` : '',
     });
+  }
+
+  getStatuses(): Observable<Status[]> {
+    return this.httpClient.get<Status[]>(this.eclipseUrl + 'status', { headers: this.getHeaders() });
+  }
+
+  postStatus(status: Status): Observable<Status> {
+    return this.httpClient.post<Status>(this.eclipseUrl + 'status', status, { headers: this.getHeaders() });
+  }
+
+  putStatus(id: number, status: Status): Observable<Status> {
+    return this.httpClient.put<Status>(`${this.eclipseUrl}status/${id}`, status, { headers: this.getHeaders() });
   }
 
   getBenches(): Observable<Bench[]> {
@@ -103,8 +117,6 @@ export class ApiService {
     return this.httpClient.get<Answer[]>(`${this.eclipseUrl}answers/conversation/${conversationId}`, { headers: this.getHeaders() });
   }
 
-
-
   postAnswer(answer: Answer): Observable<Answer> {
     return this.httpClient.post<Answer>(this.eclipseUrl + 'answers', answer, { headers: this.getHeaders() });
   }
@@ -125,6 +137,14 @@ export class ApiService {
     return this.httpClient.post<History>(this.eclipseUrl + 'histories', history, { headers: this.getHeaders() });
   }
 
+  putHistory(id: number, history: History): Observable<History> {
+    return this.httpClient.put<History>(`${this.eclipseUrl}histories/${id}`, history, { headers: this.getHeaders() });
+  }
+
+  deleteHistory(id: number): Observable<History> {
+    return this.httpClient.delete<History>(`${this.eclipseUrl}histories/${id}`, { headers: this.getHeaders() });
+  }
+
   getLocations(): Observable<Location[]> {
     return this.httpClient.get<Location[]>(this.eclipseUrl + 'locations', { headers: this.getHeaders() });
   }
@@ -136,5 +156,4 @@ export class ApiService {
   postLocation(location: LocationDto): Observable<LocationDto> {
     return this.httpClient.post<LocationDto>(this.eclipseUrl + 'locations', location, { headers: this.getHeaders() });
   }
-
 }
