@@ -18,7 +18,7 @@ export class QuestionsFormComponent {
   isEdit: boolean = false;
   Id: number = 0;
 
-  question:Question={id:0,text:''};
+  question: Question = { id: 0, text: '', orderNumber: 1 };
 
   isSubmitted: boolean = false;
   errorMessage: string = "";
