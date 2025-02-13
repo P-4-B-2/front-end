@@ -35,6 +35,7 @@ export class HomepageComponent {
       const user = await this.authService.loginWithEmail(this.email, this.password);
       console.log('Logged in:', user);
     } catch (error) {
+      // console.error('Login failed:', error.message);
     }
   }
 

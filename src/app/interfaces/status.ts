@@ -1,4 +1,4 @@
 export interface Status {
-    id: number;
+    id: number,
     type: string;
 }
