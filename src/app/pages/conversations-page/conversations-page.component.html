@@ -1,4 +1,41 @@
 <div class="container mx-auto px-6 py-8">
+    <!-- Filters -->
+    <div class="flex flex-wrap gap-4 mb-6">
+        <!-- Location Filter -->
+        <div>
+            <label class="block text-gray-700 font-semibold mb-1">Locatie</label>
+            <select class="border border-gray-300 rounded-lg px-4 py-2 w-48">
+                <option value="">Alle</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+            </select>
+        </div>
+
+        <!-- Status Filter -->
+        <div>
+            <label class="block text-gray-700 font-semibold mb-1">Status</label>
+            <select class="border border-gray-300 rounded-lg px-4 py-2 w-48">
+                <option value="">Alle</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+            </select>
+        </div>
+
+        <!-- Topic Filter -->
+        <div>
+            <label class="block text-gray-700 font-semibold mb-1">Onderwerp</label>
+            <select class="border border-gray-300 rounded-lg px-4 py-2 w-48">
+                <option value="">Alle</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Conversations List -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         @for (conversation of conversations$ | async; track conversation.id) {
         <div class="p-8 bg-white shadow-lg rounded-2xl border border-gray-200 relative overflow-hidden">
