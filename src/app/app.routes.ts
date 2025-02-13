@@ -9,11 +9,11 @@ import { MonitorConnectionComponent } from './pages/monitor-connection/monitor-c
 import { CostAnalysisComponent } from './pages/cost-analysis/cost-analysis.component';
 import { ManualComponent } from './pages/manual/manual.component';
 import { AuthGuard } from '../auth/auth.guard';
+import { HistoryComponent } from './pages/history/history.component';
 
 export const routes: Routes = [
     { path: '', component: HomepageComponent },
     { path: 'conversations', component: ConversationsPageComponent, canActivate: [AuthGuard] },
-    // { path: 'conversations', component: ConversationsPageComponent },
     { path: 'conversations/:id', component: ConversationsDetailPageComponent, canActivate: [AuthGuard] },
     { path: 'questions', component: ManageQuestionsComponent, canActivate: [AuthGuard] },
     { path: 'question/form', component: QuestionsFormComponent, canActivate: [AuthGuard] },
@@ -21,5 +21,5 @@ export const routes: Routes = [
     { path: 'monitorconnection', component: MonitorConnectionComponent, canActivate: [AuthGuard] },
     { path: 'costanalysis', component: CostAnalysisComponent, canActivate: [AuthGuard] },
     { path: 'manual', component: ManualComponent, canActivate: [AuthGuard] },
-    // { path: 'bench', component: BenchLocationComponent},
+    { path: 'history', component: HistoryComponent, canActivate: [AuthGuard] },
 ];

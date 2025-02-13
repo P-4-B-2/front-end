@@ -42,7 +42,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('authToken');
-    return signOut(this.auth).then(() => this.router.navigate(['/login']));
+    return signOut(this.auth); //.then(() => this.router.navigate(['/login']));
   }
 
   get user(): Observable<any> {
