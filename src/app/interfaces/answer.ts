@@ -1,6 +1,7 @@
 export interface Answer {
-    id: number,
-    conversationId: number,
-    questionId: number,
+    id: number;
     response: string;
+    conversationId: number;
+    questionId: number;
+    keywords: string[];
 }

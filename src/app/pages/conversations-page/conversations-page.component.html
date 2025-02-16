@@ -23,28 +23,28 @@
             </select>
         </div>
 
-        <!-- Topic Filter -->
+        <!-- Topic Filter (Dynamic Keywords) -->
         <div>
             <label class="block text-gray-700 font-semibold mb-1">Onderwerp</label>
-            <select class="border border-gray-300 rounded-lg px-4 py-2 w-48">
+            <select class="border border-gray-300 rounded-lg px-4 py-2 w-48" [(ngModel)]="selectedKeyword" (change)="filterConversations()">
                 <option value="">Alle</option>
-                <option value="A">A</option>
-                <option value="B">B</option>
-                <option value="C">C</option>
+                <option *ngFor="let keyword of keywords" [value]="keyword">{{ keyword }}</option>
             </select>
         </div>
     </div>
 
     <!-- Conversations List -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        @for (conversation of conversations$ | async; track conversation.id) {
+        @for (conversation of filteredConversations$ | async; track conversation.id) {
         <div class="p-8 bg-white shadow-lg rounded-2xl border border-gray-200 relative overflow-hidden">
             <div class="mb-4 flex justify-between items-center">
-                <h2 class="text-xl font-bold text-gray-800">Conversation #{{conversation.id}}</h2>
+                <h2 class="text-xl font-bold text-gray-800">Conversation #{{ conversation.id }}</h2>
                 <a class="text-blue-600 font-semibold hover:underline" [routerLink]="['/conversations', conversation.id]">View Details</a>
             </div>
-            <p class="text-gray-600 text-sm"><strong>Start:</strong> {{conversation.startDatetime | date:'short'}}</p>
-            <p class="text-gray-600 text-sm"><strong>End:</strong> {{conversation.endDatetime | date:'short'}}</p>
+            <p class="text-gray-600 text-sm"><strong>Start:</strong> {{ conversation.startDatetime | date:'short' }}</p>
+            <p class="text-gray-600 text-sm"><strong>End:</strong> {{ conversation.endDatetime | date:'short' }}</p>
+            
+            <!-- Sentiment Bar -->
             <div class="mt-6">
                 <strong class="text-gray-700">Sentiment:</strong>
                 <div class="mt-2 bg-gray-200 rounded-full h-3 w-full">
@@ -56,9 +56,11 @@
                     }" [style.width.%]="conversation.sentiment"></div>
                 </div>
             </div>
+
+            <!-- Summary -->
             <div class="mt-6">
                 <strong class="text-gray-700">Summary:</strong>
-                <p class="text-gray-800 text-sm leading-relaxed">{{conversation.summary}}</p>
+                <p class="text-gray-800 text-sm leading-relaxed">{{ conversation.summary }}</p>
             </div>
         </div>
         }
