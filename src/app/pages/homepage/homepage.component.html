@@ -5,12 +5,36 @@
     <div
       class="login-container max-w-lg mx-auto mt-24 p-6 bg-white shadow-lg rounded-lg">
       <h2 class="text-3xl font-semibold text-center mb-6">Login</h2>
-      <div class="my-6 border-t border-gray-300"></div>
 
-      <input type="email" [(ngModel)]="email" placeholder="Email">
-  <input type="password" [(ngModel)]="password" placeholder="Password">
-  <button (click)="login()">Login</button>
+      <div class="space-y-4">
+        <input
+          type="email"
+          [(ngModel)]="email"
+          placeholder="Email"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:outline-none"
+          title="Enter your email address"
+        />
+        <input
+          type="password"
+          [(ngModel)]="password"
+          placeholder="Password"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:outline-none"
+          title="Enter your password"
+        />
+        <button
+          (click)="login()"
+          class="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          title="Login with your email and password"
+        >
+          Log in
+        </button>
+      </div>
 
+      <div *ngIf="errorMessage" class="error mt-4 bg-red-100 text-red-800 p-3 rounded-md">
+        <p>{{ errorMessage }}</p>
+      </div>
+
+      <hr class="my-6 border-gray-300" />
 
       <div class="mt-6 text-center">
         <button
