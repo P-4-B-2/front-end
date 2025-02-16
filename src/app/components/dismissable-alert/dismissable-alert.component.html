@@ -1,0 +1,10 @@
+<div *ngIf="isVisible" class="p-4 mb-4 mt-4 text-white rounded-lg flex justify-between items-center"
+     [ngClass]="{
+       'bg-[rgba(34,197,94,0.85)]': type === 'success', 
+       'bg-[rgba(239,68,68,0.85)]': type === 'error',  
+       'bg-[rgba(234,179,8,0.85)]': type === 'warning', 
+       'bg-[rgba(59,130,246,0.85)]': type === 'info'
+     }">
+  <span>{{ message }}</span>
+  <button (click)="dismiss()" class="text-white hover:text-gray-300 text-xl">&times;</button>
+</div>
