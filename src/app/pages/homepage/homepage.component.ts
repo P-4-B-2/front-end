@@ -31,11 +31,11 @@ export class HomepageComponent {
   }
 
   async login() {
+    this.errorMessage = "";
     try {
       const user = await this.authService.loginWithEmail(this.email, this.password);
-      console.log('Logged in:', user);
-    } catch (error) {
-      // console.error('Login failed:', error.message);
+    } catch (error: any) {
+      this.errorMessage = error.message;
     }
   }
 

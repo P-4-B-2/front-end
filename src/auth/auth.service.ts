@@ -30,15 +30,26 @@ export class AuthService {
   async loginWithEmail(email: string, password: string) {
     try {
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
-      console.log('User signed in:', userCredential.user);
+      // console.log('User signed in:', userCredential.user);
       const token = await userCredential.user.getIdToken();
       localStorage.setItem('authToken', token);
       return userCredential.user;
-    } catch (error) {
-      // console.error('Login error:', error.message);
-      throw error;
+    } catch (error: any) {
+      let errorMessage = "An unexpected error occurred";
+  
+      if (error.code === "auth/user-not-found") {
+        errorMessage = "No account found with this email.";
+      } else if (error.code === "auth/wrong-password") {
+        errorMessage = "Incorrect password. Please try again.";
+      } else if (error.code === "auth/invalid-email") {
+        errorMessage = "Invalid email format.";
+      } else if (error.code === "auth/too-many-requests") {
+        errorMessage = "Too many failed attempts. Try again later.";
+      }
+      throw new Error(errorMessage);
     }
   }
+  
 
   logout() {
     localStorage.removeItem('authToken');
