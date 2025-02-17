@@ -1,14 +1,14 @@
 <form (ngSubmit)="onSubmit()" #ticketForm="ngForm" class="w-10/12 flex flex-col mx-auto mt-4">
     <div class="mb-6">
-        <label for="text" class="block mb-2 text-sm font-medium text-gray-900 ">Question text</label>
+        <label for="text" class="block mb-2 text-sm font-medium text-gray-900 ">Vraag toevoegen</label>
         <input type="text" id="text" name="text"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            placeholder="Type" required [(ngModel)]="question.text" #text="ngModel" 
+            placeholder="Type hier je nieuwe vraag" required [(ngModel)]="question.text" #text="ngModel" 
             [pattern]="'^[a-zA-Z0-9.?! ]*$'" 
             title="Only letters, numbers, periods, question marks, exclamation marks, and spaces are allowed." />
-        <div [hidden]="text.valid || text.pristine" class="text-red-500 mt-2">A question is required</div>
+        <div [hidden]="text.valid || text.pristine" class="text-red-500 mt-2">Een vraag is vereist</div>
         <div *ngIf="text?.invalid && text?.touched" class="text-red-500 mt-2">
-            Only text, numbers, periods, question marks, exclamation marks, and spaces are allowed.
+            Enkel text, nummers, kommas, vraagtekens, uitroeptekens, en spaties zijn toegestaan.
         </div>
     </div>
 

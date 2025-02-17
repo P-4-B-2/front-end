@@ -28,7 +28,7 @@
         <div>
             <label class="block text-gray-700 font-semibold mb-1">Onderwerp</label>
             <select class="border border-gray-300 rounded-lg px-4 py-2 w-48" [(ngModel)]="selectedKeyword" (change)="filterConversations()">
-                <option value="">Alle</option>
+                <option value="">Alles</option>
                 <option *ngFor="let keyword of keywords" [value]="keyword">{{ keyword }}</option>
             </select>
         </div>
@@ -39,11 +39,11 @@
         @for (conversation of filteredConversations$ | async; track conversation.id) {
         <div class="p-8 bg-white shadow-lg rounded-2xl border border-gray-200 relative overflow-hidden">
             <div class="mb-4 flex justify-between items-center">
-                <h2 class="text-xl font-bold text-gray-800">Conversation #{{ conversation.id }}</h2>
-                <a class="text-blue-600 font-semibold hover:underline" [routerLink]="['/conversations', conversation.id]">View Details</a>
+                <h2 class="text-xl font-bold text-gray-800">Conversatie #{{ conversation.id }}</h2>
+                <a class="text-blue-600 font-semibold hover:underline" [routerLink]="['/conversations', conversation.id]">Bekijk Details</a>
             </div>
             <p class="text-gray-600 text-sm"><strong>Start:</strong> {{ conversation.startDatetime | date:'short' }}</p>
-            <p class="text-gray-600 text-sm"><strong>End:</strong> {{ conversation.endDatetime | date:'short' }}</p>
+            <p class="text-gray-600 text-sm"><strong>Einde:</strong> {{ conversation.endDatetime | date:'short' }}</p>
             
             <!-- Sentiment Bar -->
             <div class="mt-6">
@@ -60,7 +60,7 @@
 
             <!-- Summary -->
             <div class="mt-6">
-                <strong class="text-gray-700">Summary:</strong>
+                <strong class="text-gray-700">Korte beschrijving:</strong>
                 <p class="text-gray-800 text-sm leading-relaxed">{{ conversation.summary }}</p>
             </div>
         </div>

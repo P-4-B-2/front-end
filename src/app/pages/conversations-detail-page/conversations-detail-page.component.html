@@ -1,11 +1,11 @@
-<div class="container mx-auto mt-8 w-10/12 flex flex-col mx-auto mt-4">
+<div class="container mx-auto mt-8 w-10/12 flex flex-col">
     <div class="conversation-details mb-4">
-      <h1 class="text-3xl mb-2">Conversation Details</h1>
+      <h1 class="text-3xl mb-2">Conversatie Details</h1>
       <div class="bg-gray-100 p-4 rounded-md shadow-lg">
-        <p><strong>Start Date:</strong> {{conversation.startDatetime | date:'short'}}</p>
-        <p><strong>End Date:</strong> {{conversation.endDatetime | date:'short'}}</p>
+        <p><strong>Start Tijd:</strong> {{conversation.startDatetime | date:'short'}}</p>
+        <p><strong>Eind Tijd:</strong> {{conversation.endDatetime | date:'short'}}</p>
         <p><strong>Sentiment:</strong> {{conversation.sentiment}}</p>
-        <p><strong>Summary:</strong> {{conversation.summary}}</p>
+        <p><strong>Korte beschrijving:</strong> {{conversation.summary}}</p>
       </div>
     </div>
   
@@ -15,11 +15,11 @@
         <div *ngFor="let answer of answers">
           <div class="answer-card mb-4 p-4 border rounded-md shadow-lg">
             <h3 class="text-xl font-semibold mb-2">{{questionsMap[answer.questionId].text}}</h3>
-            <p><strong>Response:</strong> {{answer.response}}</p>
+            <p><strong>Antwoord:</strong> {{answer.response}}</p>
           </div>
         </div>
       </div>
     </div>
   
-    <button (click)="goBack()" class="self-end mt-4 mb-8 px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded hover:bg-gray-100 text-sm">Back to Conversations</button>
+    <button (click)="goBack()" class="self-end mt-4 mb-8 px-3 py-2 bg-white text-gray-700 border border-gray-300 rounded hover:bg-gray-100 text-sm">Terug naar alle conversaties</button>
   </div>
