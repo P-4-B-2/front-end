@@ -1,1 +1,33 @@
-<p>cost-analysis works!</p>
+<div class="container flex flex-col mx-auto mt-8 w-10/12">
+    <h1 class="text-3xl">Kostenanalyse</h1>
+    <app-dismissable-alert type="warning" message="Opgelet! Deze waarden zijn slechts een benadering van de effectieve kost! Ze zijn berekend op basis van het aantal gesprekken en de prijzen van de hosting provider."></app-dismissable-alert>
+    
+    <!-- Gesprekken -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="p-8 bg-white shadow-lg rounded-2xl border border-gray-200 relative overflow-hidden">
+            <div class="mb-4 flex justify-between items-center">
+                <h2 class="font-semibold text-xl mb-2">Gesprekken</h2>
+            </div>
+            <p class="mb-4">Er zijn in totaal <span class="font-bold">{{this.totalConversations}}</span> gesprekken geweest met de bank.</p>
+        </div>
+
+        <div class="p-8 bg-white shadow-lg rounded-2xl border border-gray-200 relative overflow-hidden">
+            <div class="mb-4 flex justify-between items-center">
+                <h2 class="font-semibold text-xl mb-2">Antwoorden</h2>
+            </div>
+            <p class="mb-4">Er zijn in totaal <span class="font-bold">{{this.totalAnswers}}</span> Antwoorden opgegeven.</p>
+        </div>
+
+        <div class="p-8 bg-white shadow-lg rounded-2xl border border-gray-200 relative overflow-hidden">
+            <div class="mb-4 flex justify-between items-center">
+                <h2 class="font-semibold text-xl mb-2">Kosten</h2>   
+            </div>
+            <p>Geschatte prijs per gesprek: <span class="font-bold">€ {{(this.totalAnswers * 0.2) / this.totalConversations}}</span></p>
+            <p>Totale geschatte kosten: <span class="font-bold">€ {{this.totalAnswers * 0.2}}</span></p>
+        </div>
+    </div>
+</div>
+
+
+
+
