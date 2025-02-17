@@ -35,7 +35,6 @@ export class CostAnalysisComponent {
     this.conversations$.subscribe({
       next: (conversations) => {
         this.totalConversations = conversations.length;
-        console.log("Total Conversations:", this.totalConversations); // ✅ Logs when API response arrives
       },
       error: (error) => {
         this.errorMessage = 'Failed to fetch conversations';
@@ -51,7 +50,6 @@ export class CostAnalysisComponent {
     this.answers$.subscribe({
       next: (answers) => {
         this.totalAnswers = answers.length;
-        console.log("Total Answers:", this.totalAnswers); // ✅ Logs when API response arrives
       },
       error: (error) => {
         this.errorMessage = 'Failed to fetch answers';
