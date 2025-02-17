@@ -5,7 +5,6 @@ import { Conversation } from '../../interfaces/conversation';
 import { Answer } from '../../interfaces/answer';
 import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
-import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-cost-analysis',
