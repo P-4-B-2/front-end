@@ -19,7 +19,7 @@ import { Location } from '../../interfaces/location';
   styleUrl: './history.component.css'
 })
 export class HistoryComponent implements OnInit {
-  benches: (Bench & { currentLocation?: Location | null; pastLocations: Location[]; currentStatus?: Status | null })[] = [];
+  benches: (Bench & { currentLocation?: Location | null; pastLocations: Location[]; })[] = [];
 
   constructor(private apiService: ApiService, private http: HttpClient) {}
 
@@ -71,14 +71,10 @@ export class HistoryComponent implements OnInit {
             }
           });
 
-          let currentStatus: Status;
-          currentStatus = benchHistory.at(benchHistory.length - 1)?.status!;
-
           return {
             ...bench,
             currentLocation,
-            pastLocations,
-            currentStatus: currentStatus
+            pastLocations
           };
         });
       });
@@ -99,26 +95,14 @@ export class HistoryComponent implements OnInit {
           const { road, house_number, city, country } = response.address;
           return road && house_number
             ? `${road} ${house_number}, ${city}, ${country}`
-            : response.display_name || 'Address not found';
+            : response.display_name || 'Address onbestaand';
         }
-        return 'Address not found';
+        return 'Address onbestaand';
       }),
-      map(address => address || 'Unknown Location'),
+      map(address => address || 'Locatiie onbestaand'),
       switchMap(address => {
         return of(address);
       })
     );
-  }
-
-  toggleStatus(bench: Bench & { currentLocation?: Location | null; pastLocations?: Location[]; currentStatus?: Status | null }): void {
-    const newStatusType = bench.currentStatus?.type === 'Active' ? 'Inactive' : 'Active';
-    this.apiService.getStatuses().subscribe(statuses => {
-      const newStatus = statuses.find(s => s.type === newStatusType);
-      if (newStatus) {
-        this.apiService.putStatus(bench.id, newStatus).subscribe(() => {
-          bench.currentStatus = newStatus;
-        });
-      }
-    });
   }
 }

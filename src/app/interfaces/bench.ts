@@ -5,6 +5,5 @@ export interface Bench {
     id: number,
     name: string,
     currentLocation?: Location | null | undefined,
-    pastLocations: (Location | undefined)[],
-    currentStatus?: Status | null
+    pastLocations: (Location | undefined)[]
 }
