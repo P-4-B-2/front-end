@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { forkJoin, map, Observable, of, switchMap } from 'rxjs';
 import { ApiService } from '../../services/api.service';
 import { History } from '../../interfaces/history';
@@ -7,6 +7,9 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Status } from '../../interfaces/status';
 import { timer } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { Bench } from '../../interfaces/bench';
+import { Location } from '../../interfaces/location';
 
 @Component({
   selector: 'app-conversations-page',
@@ -15,63 +18,81 @@ import { timer } from 'rxjs';
   templateUrl: './history.component.html',
   styleUrl: './history.component.css'
 })
-export class HistoryComponent {
-  histories$!: Observable<History[]>;
-  errorMessage: string = '';
+export class HistoryComponent implements OnInit {
+  benches: (Bench & { currentLocation?: Location | null; pastLocations: Location[]; currentStatus?: Status | null })[] = [];
 
-  constructor(private apiService: ApiService, private router: Router, private http: HttpClient) {}
+  constructor(private apiService: ApiService, private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.getHistory();
+    this.loadBenches();
   }
 
-  getHistory() {
-    this.histories$ = this.apiService.getHistory().pipe(
-      switchMap(histories => {
-        return forkJoin({
-          histories: of(histories),
-          benches: this.apiService.getBenches(),
-          locations: this.apiService.getLocations(),
-          statuses: this.apiService.getStatuses()
-        }).pipe(
-          switchMap(({ histories, benches, locations, statuses }) => {
-            const updatedHistories$ = histories.map((history, index) => {
-              const location = locations.find(l => l.id === history.locationId);
-  
-              if (location) {
-                return timer(index * 2000).pipe(
-                  switchMap(() =>
-                    this.getAddress(location.latitude, location.longitude).pipe(
-                      map(address => ({
-                        ...history,
-                        bench: benches.find(b => b.id === history.benchId),
-                        location: { ...location, address },
-                        status: statuses.find(s => s.id === history.statusId)
-                      }))
-                    )
-                  )
-                );
+  loadBenches(): void {
+    this.apiService.getBenches().subscribe(benches => {
+      this.apiService.getHistory().subscribe(historyRecords => {
+        this.benches = benches.map(bench => {
+          const benchHistory = historyRecords.filter(h => h.benchId === bench.id);
+          const currentHistory = benchHistory.length ? benchHistory[0] : null;
+          const pastHistories = benchHistory.slice(1);
+
+          // for the current location
+          let currentLocation: Location | undefined = undefined;
+          if (currentHistory && currentHistory.locationId) {
+            this.apiService.getLocation(currentHistory.locationId).subscribe(location => {
+              currentLocation = location;
+              // Get the address here, after getting the location
+              if (currentLocation) {
+                this.getAddress(currentLocation.latitude, currentLocation.longitude).subscribe(address => {
+                  if (currentLocation) {
+                    currentLocation.address = address;
+                  }
+                });
               }
-  
-              return of({
-                ...history,
-                bench: benches.find(b => b.id === history.benchId),
-                location,
-                status: statuses.find(s => s.id === history.statusId)
-              });
             });
-  
-            return forkJoin(updatedHistories$);
-          })
-        );
-      })
-    );
+          }
+
+          // for the past locations
+          const pastLocations: Location[] = [];
+          pastHistories.forEach(history => {
+            if (history.locationId) {
+              this.apiService.getLocation(history.locationId).subscribe(location => {
+                  if(location) {
+                    location.address = 'Loading...';
+                    pastLocations.push(location);
+
+                    // Get the address here, after getting the location
+                    this.getAddress(location.latitude, location.longitude).subscribe(address => {
+                      if (location) {
+                        location.address = address;
+                      }
+                    });
+                  }
+              });
+            }
+          });
+
+          let currentStatus: Status;
+          currentStatus = benchHistory.at(benchHistory.length - 1)?.status!;
+
+          return {
+            ...bench,
+            currentLocation,
+            pastLocations,
+            currentStatus: currentStatus
+          };
+        });
+      });
+    });
   }
 
   getAddress(latitude: number, longitude: number): Observable<string> {
-    if (!latitude || !longitude) return of('Invalid Coordinates');
-    const url = "https://nominatim.openstreetmap.org/reverse?format=json&lat="+String(latitude)+"&lon="+String(longitude);
-  
+    if (!latitude || !longitude) {
+      console.error('Invalid Coordinates:', latitude, longitude);
+      return of('Invalid Coordinates');
+    }
+
+    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+
     return this.http.get<any>(url).pipe(
       map(response => {
         if (response && response.address) {
@@ -83,39 +104,21 @@ export class HistoryComponent {
         return 'Address not found';
       }),
       map(address => address || 'Unknown Location'),
-      switchMap(address => of(address)),
+      switchMap(address => {
+        return of(address);
+      })
     );
-  }  
+  }
 
-  toggleStatus(history: History): void {
-    if (!history.status) {
-      console.error('Status is undefined for history:', history);
-      return;
-    }
-
-    const newStatus: Status = {
-      id: history.status.id,
-      type: history.status.type === 'Active' ? 'Inactive' : 'Active',
-    };
-
-    this.apiService.putStatus(newStatus.id, newStatus).subscribe(
-      (updatedStatus) => {
-        this.histories$ = this.histories$.pipe(
-          map(histories =>
-            histories.map(h => {
-              if (h.id === history.id) {
-                return { ...h, status: newStatus };  // Update the status in the local object
-              }
-              return h;
-            })
-          )
-        );
-        this.getHistory();
-      },
-      (error) => {
-        console.error('Error updating status:', error);
+  toggleStatus(bench: Bench & { currentLocation?: Location | null; pastLocations?: Location[]; currentStatus?: Status | null }): void {
+    const newStatusType = bench.currentStatus?.type === 'Active' ? 'Inactive' : 'Active';
+    this.apiService.getStatuses().subscribe(statuses => {
+      const newStatus = statuses.find(s => s.type === newStatusType);
+      if (newStatus) {
+        this.apiService.putStatus(bench.id, newStatus).subscribe(() => {
+          bench.currentStatus = newStatus;
+        });
       }
-    );
-  }  
-
+    });
+  }
 }

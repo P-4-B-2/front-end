@@ -37,6 +37,9 @@ export class ApiService {
   putStatus(id: number, status: Status): Observable<Status> {
     return this.httpClient.put<Status>(`${this.eclipseUrl}status/${id}`, status, { headers: this.getHeaders() });
   }
+  getLocation(locationId: number): Observable<Location> {
+    return this.httpClient.get<Location>(`${this.eclipseUrl}/locations/${locationId}`, { headers: this.getHeaders() });
+  }
 
   getBenches(): Observable<Bench[]> {
     return this.httpClient.get<Bench[]>(this.eclipseUrl + 'benches', { headers: this.getHeaders() });
